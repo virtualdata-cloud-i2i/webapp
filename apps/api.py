@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import subprocess
 
 from dash import html
 
@@ -100,9 +101,19 @@ def trigger_ci(payload=None):
             return Response(str(rep), 400)
 
     # Execute the CI
+    # rc = subprocess.check_call("./run_ci.sh --branch {}".format(payload['branch']), shell=True)
+    rc = subprocess.call(["./run_ci.sh", "--branch", "{}".format(payload['branch'])], shell=True)
 
-    rep = {
-        'status': 'success',
-        'text': "CI has started for branch {}.\n".format(payload['branch'])
-    }
-    return Response(str(rep), 200)
+    if rc == 0:
+        rep = {
+            'status': 'success',
+            'text': "CI has passed for branch {}.\n".format(payload['branch'])
+        }
+        status = 200
+    else:
+        rep = {
+            'status': 'error',
+            'text': "CI has errored for branch {} with code {}.\n".format(payload['branch'], rc)
+        }
+        status = 400
+    return Response(str(rep), status)
