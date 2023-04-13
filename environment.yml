@@ -1,0 +1,10 @@
+name: vd
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - pip
+  - pip:
+    - -r requirements.txt
+
+
