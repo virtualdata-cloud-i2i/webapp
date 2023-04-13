@@ -22,9 +22,8 @@ from flask import request, jsonify, Response
 
 import pandas as pd
 
-#from myapp import add_numbers
-def add_numbers(a, b):
-    return a + b
+from mylib import add_numbers
+
 
 api_bp = Blueprint('', __name__)
 
