@@ -101,8 +101,7 @@ def trigger_ci(payload=None):
             return Response(str(rep), 400)
 
     # Execute the CI
-    # rc = subprocess.check_call("./run_ci.sh --branch {}".format(payload['branch']), shell=True)
-    rc = subprocess.call(["./run_ci.sh", "--branch", "{}".format(payload['branch'])], shell=True)
+    rc = subprocess.call(["./run_ci.sh", "--branch", "{}".format(payload['branch'])])
 
     if rc == 0:
         rep = {
